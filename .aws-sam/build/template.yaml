@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless patterns - Amazon API Gateway to AWS Lambda to Amazon DynamoDB
+Resources:
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Description: Lambda function inserts data into DynamoDB table
+    Properties:
+      FunctionName: WeatherFunction
+      Runtime: nodejs16.x
+      Handler: index.foobar
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName:
+            Ref: DynamoDBTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+      CodeUri: LambdaFunction
+      Environment:
+        Variables:
+          NODE_OPTIONS: ' --enable-source-maps'
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - index.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: LambdaFunction
+  DynamoDBTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: WeatherData
+Outputs:
+  EndpointUrl:
+    Description: HTTP REST endpoint URL
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod

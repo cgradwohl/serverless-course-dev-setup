@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../private/var/folders/_0/92zjmbxx3hb7vfhml6j9s8k80000gn/T/tmpa6egheg5/index.ts"],
+  "sourcesContent": ["interface Foo {\n  bar: string;\n}\n\nexport const foobar = () => {\n  const foo: Foo = {\n    bar: \"baz\",\n  };\n  return foo;\n};\n"],
+  "mappings": "yaAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,YAAAE,IAAA,eAAAC,EAAAH,GAIO,IAAME,EAAS,KACH,CACf,IAAK,KACP",
+  "names": ["tmpa6egheg5_exports", "__export", "foobar", "__toCommonJS"]
+}
