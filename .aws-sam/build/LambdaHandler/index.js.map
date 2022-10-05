@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../private/var/folders/_0/92zjmbxx3hb7vfhml6j9s8k80000gn/T/tmpv6bz2c44/index.ts"],
+  "sourcesContent": ["import { APIGatewayProxyHandlerV2 } from \"aws-lambda\";\n\n// import { APIGatewayProxyHandlerV2 } from \"aws-lambda\";\ninterface Foo {\n  bar: string;\n}\n\nexport const foobar: APIGatewayProxyHandlerV2 = async (event) => {\n  const foo: Foo = {\n    bar: \"baz\",\n  };\n  return {\n    statusCode: 200,\n    body: JSON.stringify({ foo, event }),\n  };\n};\n"],
+  "mappings": "yaAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,YAAAE,IAAA,eAAAC,EAAAH,GAOO,IAAME,EAAmC,MAAOE,GAAU,CAC/D,IAAMC,EAAW,CACf,IAAK,KACP,EACA,MAAO,CACL,WAAY,IACZ,KAAM,KAAK,UAAU,CAAE,IAAAA,EAAK,MAAAD,CAAM,CAAC,CACrC,CACF",
+  "names": ["tmpv6bz2c44_exports", "__export", "foobar", "__toCommonJS", "event", "foo"]
+}

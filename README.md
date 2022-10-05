@@ -22,19 +22,24 @@ At this point we are ready to add SAM template and SAM pipeline for Github Actio
 (Note that if you know you need multiple services, then it is a good idea
 to use nx instead.)
 
-10. `npm i esbuild`
-11.
+10. `npm install --save @types/aws-lambda`, note that you use it like: `import { APIGatewayProxyHandlerV2 } from "aws-lambda";` not `import { APIGatewayProxyHandlerV2 } from "@types/aws-lambda";`
+
+11. `npm i esbuild`
+12.
 
 ```yml
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
+
 Transform: AWS::Serverless-2016-10-31
+
 Description: Serverless patterns - Amazon API Gateway to AWS Lambda to Amazon DynamoDB
+
 Resources:
-  LambdaFunction:
+  LambdaHandler:
     Type: AWS::Serverless::Function
-    Description: "Lambda function inserts data into DynamoDB table"
+    Description: 'Lambda function to Get and Put data into DynamoDB table'
     Properties:
-      FunctionName: WeatherFunction
+      FunctionName: LambdaHandler
       Runtime: nodejs16.x
       # CodeUri: src/
       Handler: index.foobar
@@ -42,11 +47,17 @@ Resources:
         DynamoDBCrudPolicy:
           TableName: !Ref DynamoDBTable
       Events:
-        ApiEvent:
+        PutEvent:
           Type: Api
           Properties:
             Path: /
-            Method: POST
+            Method: PUT
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+    Metadata:
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -59,11 +70,11 @@ Resources:
   DynamoDBTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: WeatherData
+      TableName: DynamoTable
 Outputs:
   EndpointUrl:
-    Description: "HTTP REST endpoint URL"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+    Description: 'HTTP REST endpoint URL'
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev'
 ```
 
-12. `sam build`
+13. `sam build` and `sam deploy --guided`
